@@ -7,7 +7,7 @@
 #[derive(Debug)]
 struct Stack<T> {
 	size: usize,
-	data: Vec<T>,
+	data: Vec<T>, 
 }
 impl<T> Stack<T> {
 	fn new() -> Self {

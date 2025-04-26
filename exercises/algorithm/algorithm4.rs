@@ -3,7 +3,7 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
+//
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -51,6 +51,9 @@ where
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
         //TODO
+        if let Some(&mut node) = self.root {
+        	
+        }
     }
 
     // Search for a value in the BST

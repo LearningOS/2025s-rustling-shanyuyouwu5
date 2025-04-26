@@ -11,7 +11,7 @@ struct Graph {
     adj: Vec<Vec<usize>>, 
 }
 
-impl Graph {
+impl Graph { 
     // Create a new graph with n vertices
     fn new(n: usize) -> Self {
         Graph {

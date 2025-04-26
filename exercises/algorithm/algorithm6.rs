@@ -10,7 +10,7 @@ struct Graph {
     adj: Vec<Vec<usize>>, 
 }
 
-impl Graph {
+impl Graph { 
     fn new(n: usize) -> Self {
         Graph {
             adj: vec![vec![]; n],

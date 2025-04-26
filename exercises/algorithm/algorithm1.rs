@@ -9,11 +9,11 @@ use std::ptr::NonNull;
 use std::vec::*;
 
 #[derive(Debug)]
-struct Node<T> {
+struct Node<T> {// This is the single linked list node.
     val: T,
     next: Option<NonNull<Node<T>>>,
 }
-
+// A build method for the node.
 impl<T> Node<T> {
     fn new(t: T) -> Node<T> {
         Node {
@@ -22,7 +22,7 @@ impl<T> Node<T> {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug)]// This is the linked list construction.
 struct LinkedList<T> {
     length: u32,
     start: Option<NonNull<Node<T>>>,
@@ -33,9 +33,10 @@ impl<T> Default for LinkedList<T> {
     fn default() -> Self {
         Self::new()
     }
-}
+} 
 
-impl<T> LinkedList<T> {
+impl<T> LinkedList<T> {// First create a new linked list.The first list have no lentht
+    // no strat node no end node.
     pub fn new() -> Self {
         Self {
             length: 0,
@@ -43,7 +44,7 @@ impl<T> LinkedList<T> {
             end: None,
         }
     }
-
+// Then add a new node to the end of the list.
     pub fn add(&mut self, obj: T) {
         let mut node = Box::new(Node::new(obj));
         node.next = None;
@@ -59,7 +60,7 @@ impl<T> LinkedList<T> {
     pub fn get(&mut self, index: i32) -> Option<&T> {
         self.get_ith_node(self.start, index)
     }
-
+// Search the node in the list by index.Return no ownship.
     fn get_ith_node(&mut self, node: Option<NonNull<Node<T>>>, index: i32) -> Option<&T> {
         match node {
             None => None,
@@ -70,14 +71,62 @@ impl<T> LinkedList<T> {
         }
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+	where
+        T:PartialOrd,
+		T:Copy,
 	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
-        }
-	}
+         let mut current_a = list_a.start;
+         let mut current_b = list_b.start;
+         let mut result = LinkedList::new();
+         let mut current_c = result.start;
+         let read = unsafe {(|node_sym|*node_sym.unwrap().as_ptr());};
+         match (current_a,current_b){
+         	(None,None) => return result,
+            (None,Some(b)) => {
+                return list_b;
+            },
+            (Some(a),None) => {
+                return list_a;
+            },
+            (Some(a),Some(b)) => {
+            	let node_a = read(a);
+            	let node_b = read(b);
+                if node_a.val <= node_b.val {
+                    result.add(node_a.val);
+                    result.start = current_a;
+                    current_a = node_a.next;
+                }
+                else {
+                    result.add(node_b.val);
+                    result.start = current_b;
+                    current_b = node_b.next;
+                }
+                while let (Some(a),Some(b)) = (current_a,current_b) {
+                    let node_a = read(a);
+                    let node_b = read(b);
+                    if node_a.val <= node_b.val {
+                        result.add(node_a.val);
+                        current_a = node_a.next;
+                    }
+                    else {
+                        result.add(node_b.val);
+                        current_b = node_b.next;
+                    }
+                }
+                while let Some(a) = current_a {
+                    let node_a = read(a);
+                    result.add(node_a.val);
+                    current_a = node_a.next;
+                }
+                while let Some(b) = current_b {
+                    let node_b = read(b);
+                    result.add(node_b.val);
+                    current_b = node_b.next;
+                }
+                result
+            }
+         }
+    }
 }
 
 impl<T> Display for LinkedList<T>
