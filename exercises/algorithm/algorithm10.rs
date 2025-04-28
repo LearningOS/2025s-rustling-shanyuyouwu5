@@ -44,7 +44,7 @@ pub trait Graph {
         if self.adjacency_table().contains_key(node) {
             return false;
         }
-        self.adjacency_table_mutable().insert(node.to_string()).or_insert(Vec::new());
+        self.adjacency_table_mutable().entry(node.to_string()).or_insert(Vec::new());
 		true
     }
     fn add_edge(&mut self, edge: (&str, &str, i32)) {

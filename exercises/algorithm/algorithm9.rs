@@ -42,7 +42,7 @@ where
         self.items.push(value);
         let mut nowidx = self.count;
         while self.parent_idx(nowidx) > 0 {
-            let result = (self.comparator)(&self.items[nowidx], &self.items[self.parent_idx(self.count)]);
+            let result = (self.comparator)(&self.items[nowidx], &self.items[self.parent_idx(nowidx)]);
             if result {
                 let temp = self.parent_idx(nowidx);
                 self.items.swap(nowidx,temp);
@@ -115,9 +115,7 @@ where
         if self.is_empty() {
             return None;
         }
-        else {
-            let result = self.items.swap_remove(1);
-        
+        let result = self.items.swap_remove(1);
         self.count =self.count - 1;
         let mut idx = 1;
         while self.children_present(idx) {
@@ -132,7 +130,6 @@ where
             
         }
         return Some(result);
-        }
     }
 }
 
