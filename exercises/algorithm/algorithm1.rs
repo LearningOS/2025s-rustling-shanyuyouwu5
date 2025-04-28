@@ -78,8 +78,7 @@ impl<T> LinkedList<T> {// First create a new linked list.The first list have no 
          let mut current_a = list_a.start;
          let mut current_b = list_b.start;
          let mut result = LinkedList::new();
-         let mut current_c = result.start;
-         let read = unsafe {(|node_sym|*node_sym.unwrap().as_ptr());};
+         let read = |node_sym:NonNull<Node<T>>|unsafe {&*node_sym.as_ptr()};
          match (current_a,current_b){
          	(None,None) => return result,
             (None,Some(b)) => {
@@ -89,18 +88,6 @@ impl<T> LinkedList<T> {// First create a new linked list.The first list have no 
                 return list_a;
             },
             (Some(a),Some(b)) => {
-            	let node_a = read(a);
-            	let node_b = read(b);
-                if node_a.val <= node_b.val {
-                    result.add(node_a.val);
-                    result.start = current_a;
-                    current_a = node_a.next;
-                }
-                else {
-                    result.add(node_b.val);
-                    result.start = current_b;
-                    current_b = node_b.next;
-                }
                 while let (Some(a),Some(b)) = (current_a,current_b) {
                     let node_a = read(a);
                     let node_b = read(b);

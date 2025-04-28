@@ -34,8 +34,7 @@ impl<T> Stack<T> {
 		// TODO
 		if!self.is_empty() {
 			self.size -= 1;
-			self.data.pop();
-			Some(self)
+			self.data.pop()
 		}
 		else {
 			None
@@ -123,6 +122,9 @@ fn bracket_match(bracket: &str) -> bool
 				return false;
 			}
 		}
+	}
+	if !stack.is_empty(){
+		return false;
 	}
 	true
 }

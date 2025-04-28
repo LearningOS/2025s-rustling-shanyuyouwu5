@@ -9,22 +9,18 @@ fn sort<T>(array: &mut [T])
 where
     T: Ord + Copy,
 {
-	if array.len() <= 1 {
-		return array;
-	}
-	let mut i = 0;
-    while i < array.len() {
-        let mut j = 0;
-        while j < array.len() - j {
-            if array[j] > array[j + 1] {
-                array.swap(j, j + 1);
+    for i in 0..array.len() -1 {
+        let mut j = i;
+        while j >= 0 {
+            if array[j] > array[j+1] {
+                array.swap(j,j+1);
             }
-            j += 1;
+            if j == 0{
+                break;
+            }
+            j -= 1;
         }
-        i += 1;
     }
-    return array;
-    
 }
 #[cfg(test)]
 mod tests {
